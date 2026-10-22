@@ -32,6 +32,11 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# local-only MySQL migrations — explicit project policy: never commit or push
+# (spec §10). Narrow rule on purpose: other .sql query/seed files stay tracked.
+/src/server/db/migrations/
 
 # vercel
 .vercel
