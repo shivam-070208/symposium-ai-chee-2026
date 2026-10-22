@@ -60,3 +60,30 @@ npm run db:migrate
 
 The runner records SHA-256 checksums in `schema_migrations` and refuses to run
 if an applied migration was edited or is missing locally.
+
+## Background email worker (BullMQ)
+
+Emails are never sent inside a database transaction. The business transaction
+writes an `email_outbox` row, then a BullMQ job is queued with its ID; a separate
+worker renders the template, sends it over SMTP, and updates the outbox row.
+Failures retry with exponential backoff (5 attempts), and a sent row has its
+payload redacted because it may contain a private access link.
+
+```bash
+# Redis
+docker run -d --name aichee-redis --restart unless-stopped \
+  -p 127.0.0.1:6379:6379 -v aichee-redis-data:/data \
+  redis:7 redis-server --appendonly yes
+
+# Optional local mail capture (SMTP 1025, web UI http://127.0.0.1:8025)
+docker run -d --name aichee-mailpit --restart unless-stopped \
+  -p 127.0.0.1:1025:1025 -p 127.0.0.1:8025:8025 axllent/mailpit
+
+# In a second terminal, keep the worker running
+npm run worker:email
+```
+
+The worker is a separate long-running Node process — `npm run dev` alone does
+not deliver email. Set `REDIS_URL`, `EMAIL_SMTP_URL`, `EMAIL_FROM_ADDRESS` and
+`EMAIL_FROM_NAME` in `.env.local`. Any SMTP provider works; an API-based
+provider can be added later behind `src/server/email/email-transport.ts`.

@@ -10,8 +10,11 @@ const envSchema = z.object({
   ADMIN_SESSION_SECRET: z.string().min(32).optional(),
   AWS_REGION: z.string().min(1).optional(),
   AWS_S3_BUCKET: z.string().min(1).optional(),
-  EMAIL_PROVIDER_API_KEY: z.string().min(1).optional(),
+  REDIS_URL: z.string().min(1).optional(),
+  EMAIL_SMTP_URL: z.string().min(1).optional(),
   EMAIL_FROM_ADDRESS: z.email().optional(),
+  EMAIL_FROM_NAME: z.string().min(1).max(120).optional(),
+  EMAIL_WORKER_CONCURRENCY: z.coerce.number().int().min(1).max(20).optional(),
 });
 
 export type AppEnv = z.infer<typeof envSchema>;
