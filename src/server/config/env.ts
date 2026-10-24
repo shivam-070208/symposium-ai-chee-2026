@@ -12,6 +12,8 @@ const envSchema = z.object({
   AWS_S3_BUCKET: z.string().min(1).optional(),
   REDIS_URL: z.string().min(1).optional(),
   EMAIL_SMTP_URL: z.string().min(1).optional(),
+  EMAIL_SMTP_USER: z.string().trim().min(1).optional(),
+  EMAIL_SMTP_APP_PASSWORD: z.string().trim().min(1).optional(),
   EMAIL_FROM_ADDRESS: z.email().optional(),
   EMAIL_FROM_NAME: z.string().min(1).max(120).optional(),
   EMAIL_WORKER_CONCURRENCY: z.coerce.number().int().min(1).max(20).optional(),

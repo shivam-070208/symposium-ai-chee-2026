@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   ABSTRACT_DECISIONS,
   ABSTRACT_STATUSES,
+  EMAIL_OUTBOX_STATUSES,
   PAYMENT_STATUSES,
   REGISTRATION_STATUSES,
 } from "../../lib/domain.ts";
@@ -37,6 +38,14 @@ export type AdminRegistrationListInput = z.infer<
 
 export const adminRegistrationExportInputSchema =
   adminRegistrationListInputSchema.omit({ page: true, pageSize: true });
+
+export type AdminRegistrationExportInput = z.infer<
+  typeof adminRegistrationExportInputSchema
+>;
+
+export const adminRegistrationDetailInputSchema = z.object({
+  registrationId: positiveIdSchema,
+});
 
 export const adminRegistrationStatusUpdateInputSchema = z.object({
   registrationId: positiveIdSchema,
@@ -94,3 +103,9 @@ export const adminPaymentRejectInputSchema = z.object({
 export const adminEmailRetryInputSchema = z.object({
   outboxId: positiveIdSchema,
 });
+
+export const adminEmailListInputSchema = paginationSchema.extend({
+  status: z.enum(EMAIL_OUTBOX_STATUSES).optional(),
+});
+
+export type AdminEmailListInput = z.infer<typeof adminEmailListInputSchema>;

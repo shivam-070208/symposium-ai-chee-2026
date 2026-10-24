@@ -1,26 +1,133 @@
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base surfaces */
+  --background: #faf9f6;
+  --foreground: #202a36;
+
+  --card: #ffffff;
+  --card-foreground: #202a36;
+
+  --popover: #ffffff;
+  --popover-foreground: #202a36;
+
+  /* Primary: restrained institutional blue */
+  --primary: #173f70;
+  --primary-foreground: #ffffff;
+
+  /* Secondary surfaces */
+  --secondary: #eeece6;
+  --secondary-foreground: #283443;
+
+  --muted: #f0efeb;
+  --muted-foreground: #697586;
+
+  --accent: #e9eff6;
+  --accent-foreground: #173f70;
+
+  --destructive: #b4232f;
+  --destructive-foreground: #ffffff;
+
+  /* Borders and interaction */
+  --border: #e1e0dc;
+  --input: #d4d6da;
+  --ring: #35699e;
+
+  --radius: 0.375rem;
+
+  /* Editorial design tokens */
+  --paper: #faf9f6;
+  --ink: #202a36;
+  --lagoon: #173f70;
+  --lagoon-deep: #102d50;
+  --mint: #e9eff6;
+  --brass: #987445;
+  --hairline: #e1e0dc;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-lagoon: var(--lagoon);
+  --color-lagoon-deep: var(--lagoon-deep);
+  --color-mint: var(--mint);
+  --color-brass: var(--brass);
+  --color-hairline: var(--hairline);
+
+  /* Conference registration palette */
+  --color-navy: #172b46;
+  --color-royal: #245a91;
+  --color-bright: #35699e;
+  --color-ice: #edf2f7;
+  --color-canvas: #f5f4f0;
+  --color-bodytext: #465568;
+  --color-mist: #748092;
+  --color-line: #e1e0dc;
+  --color-success: #237653;
+  --color-errorred: #b4232f;
+
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--border);
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: #dce6f1;
+    color: #172b46;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
 }
