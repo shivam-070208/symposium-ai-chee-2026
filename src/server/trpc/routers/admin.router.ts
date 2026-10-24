@@ -12,12 +12,22 @@ import {
   listAdminRegistrations,
   updateRegistrationStatus,
 } from "@/server/admin/admin-registrations";
+import {
+  findAdminQueryById,
+  listAdminQueries,
+  replyToContactQuery,
+  updateContactQueryStatus,
+} from "@/server/admin/admin-queries";
 import { AdminActionError } from "@/server/admin/admin-errors";
 import { clearAdminSession, startAdminSession } from "@/server/admin/admin-session";
 import {
   adminEmailListInputSchema,
   adminEmailRetryInputSchema,
   adminLoginInputSchema,
+  adminQueryDetailInputSchema,
+  adminQueryListInputSchema,
+  adminQueryReplyInputSchema,
+  adminQueryStatusUpdateInputSchema,
   adminRegistrationDetailInputSchema,
   adminRegistrationListInputSchema,
   adminRegistrationStatusUpdateInputSchema,
@@ -129,6 +139,52 @@ export const adminRouter = createTRPCRouter({
             actorEmail: ctx.adminEmail,
           });
           return { queued: true };
+        } catch (error) {
+          throw mapAdminActionError(error);
+        }
+      }),
+  }),
+
+  queries: createTRPCRouter({
+    list: adminProcedure
+      .input(adminQueryListInputSchema)
+      .query(({ input }) => listAdminQueries(input)),
+
+    byId: adminProcedure
+      .input(adminQueryDetailInputSchema)
+      .query(async ({ input }) => {
+        const detail = await findAdminQueryById(input.queryId);
+
+        if (!detail) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Query not found" });
+        }
+
+        return detail;
+      }),
+
+    updateStatus: adminProcedure
+      .input(adminQueryStatusUpdateInputSchema)
+      .mutation(async ({ ctx, input }) => {
+        try {
+          return await updateContactQueryStatus({
+            queryId: input.queryId,
+            status: input.status,
+            actorEmail: ctx.adminEmail,
+          });
+        } catch (error) {
+          throw mapAdminActionError(error);
+        }
+      }),
+
+    reply: adminProcedure
+      .input(adminQueryReplyInputSchema)
+      .mutation(async ({ ctx, input }) => {
+        try {
+          return await replyToContactQuery({
+            queryId: input.queryId,
+            message: input.message,
+            actorEmail: ctx.adminEmail,
+          });
         } catch (error) {
           throw mapAdminActionError(error);
         }

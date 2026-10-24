@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   ABSTRACT_DECISIONS,
   ABSTRACT_STATUSES,
+  CONTACT_QUERY_STATUSES,
   EMAIL_OUTBOX_STATUSES,
   PAYMENT_STATUSES,
   REGISTRATION_STATUSES,
@@ -109,3 +110,30 @@ export const adminEmailListInputSchema = paginationSchema.extend({
 });
 
 export type AdminEmailListInput = z.infer<typeof adminEmailListInputSchema>;
+
+export const adminQueryListInputSchema = paginationSchema.extend({
+  search: trimmedText(1, 200).optional(),
+  status: z.enum(CONTACT_QUERY_STATUSES).optional(),
+});
+
+export type AdminQueryListInput = z.infer<typeof adminQueryListInputSchema>;
+
+export const adminQueryDetailInputSchema = z.object({
+  queryId: positiveIdSchema,
+});
+
+export const adminQueryStatusUpdateInputSchema = z.object({
+  queryId: positiveIdSchema,
+  status: z.enum(CONTACT_QUERY_STATUSES),
+});
+
+export type AdminQueryStatusUpdateInput = z.infer<
+  typeof adminQueryStatusUpdateInputSchema
+>;
+
+export const adminQueryReplyInputSchema = z.object({
+  queryId: positiveIdSchema,
+  message: trimmedText(10, 4000),
+});
+
+export type AdminQueryReplyInput = z.infer<typeof adminQueryReplyInputSchema>;

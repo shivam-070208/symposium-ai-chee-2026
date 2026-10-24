@@ -155,7 +155,7 @@ export const VenueContactSection = () => {
 
             <div className="mt-auto pt-8">
               <Link
-                href="/contact"
+                href="#contact"
                 className="inline-flex w-full items-center justify-between gap-4 border border-royal bg-royal px-5 py-4 text-sm font-medium text-white transition-colors duration-300 hover:border-navy hover:bg-navy"
               >
                 Contact the organisers

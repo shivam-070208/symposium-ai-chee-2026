@@ -4,16 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "cn";
 
-// Pages beyond Home and Registration are planned but not yet routed, so they
-// render as non-navigating labels rather than dead links.
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
-  { label: "About", href: null },
-  { label: "Themes", href: null },
-  { label: "Speakers", href: null },
+  { label: "About", href: "/#about" },
+  { label: "Themes", href: "/#themes" },
+  { label: "Speakers", href: "/#speakers" },
   { label: "Registration", href: "/register" },
-  { label: "Important Dates", href: null },
-  { label: "Contact", href: null },
+  { label: "Important Dates", href: "/#important-dates" },
+  { label: "Contact", href: "/#contact" },
 ] as const;
 
 export const SiteNav = () => {
@@ -25,19 +23,7 @@ export const SiteNav = () => {
       className="hidden items-center gap-7 lg:flex"
     >
       {NAV_ITEMS.map((item) => {
-        const isActive = item.href !== null && pathname === item.href;
-
-        if (item.href === null) {
-          return (
-            <span
-              key={item.label}
-              aria-disabled="true"
-              className="cursor-default text-[14px] font-medium text-mist"
-            >
-              {item.label}
-            </span>
-          );
-        }
+        const isActive = pathname === item.href;
 
         return (
           <Link

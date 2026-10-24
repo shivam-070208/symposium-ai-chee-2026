@@ -6,5 +6,6 @@ export type AdminNavItem = {
 export const ADMIN_NAV_ITEMS = [
   { href: "/admin", label: "Overview" },
   { href: "/admin/registrations", label: "Registrations" },
+  { href: "/admin/queries", label: "Queries" },
   { href: "/admin/emails", label: "Outbox" },
 ] as const satisfies readonly AdminNavItem[];

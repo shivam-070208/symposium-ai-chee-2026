@@ -80,7 +80,7 @@ export const HeroSection = () => {
             </Link>
 
             <Link
-              href="/about"
+              href="#about"
               className="inline-flex h-12 items-center justify-center rounded-full border border-[#C9D7E9] bg-white/75 px-7 text-sm font-semibold text-[#18345E] backdrop-blur-sm transition-colors hover:border-[#1457C5] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
             >
               Explore Symposium

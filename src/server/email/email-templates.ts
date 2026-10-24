@@ -47,6 +47,17 @@ const registrationStatusPayloadSchema = z.object({
   accessPath: accessPathSchema,
 });
 
+const contactQueryReceivedPayloadSchema = z.object({
+  name: trimmedText(1, 200),
+  subject: trimmedText(1, 300),
+});
+
+const contactQueryReplyPayloadSchema = z.object({
+  name: trimmedText(1, 200),
+  subject: trimmedText(1, 300),
+  message: trimmedText(1, 4000),
+});
+
 type RenderedEmail = {
   readonly subject: string;
   readonly html: string;
@@ -261,6 +272,53 @@ const registrationStatusTemplate = (
   };
 };
 
+const contactQueryReceivedTemplate = (
+  payload: unknown,
+): RenderedEmail => {
+  const input = contactQueryReceivedPayloadSchema.parse(payload);
+  const heading = "We received your query";
+
+  return {
+    subject: `[${EVENT_CONFIG.name}] We received your query`,
+    html: renderHtmlEmail(heading, [
+      `Hi ${escapeHtml(input.name)},`,
+      `Thanks for getting in touch about <strong>${escapeHtml(input.subject)}</strong>.`,
+      "We have received your query and will contact you soon.",
+      escapeHtml(
+        "If your question is urgent, mention it in a follow-up reply to this email.",
+      ),
+    ]),
+    text: renderTextEmail(heading, [
+      `Hi ${input.name},`,
+      `Thanks for getting in touch about "${input.subject}".`,
+      "We have received your query and will contact you soon.",
+      "If your question is urgent, mention it in a follow-up reply to this email.",
+    ]),
+  };
+};
+
+const contactQueryReplyTemplate = (
+  payload: unknown,
+): RenderedEmail => {
+  const input = contactQueryReplyPayloadSchema.parse(payload);
+  const heading = "Reply to your query";
+
+  return {
+    subject: `[${EVENT_CONFIG.name}] Re: ${input.subject}`,
+    html: renderHtmlEmail(heading, [
+      `Hi ${escapeHtml(input.name)},`,
+      `This is a reply to your query <strong>${escapeHtml(input.subject)}</strong>.`,
+      renderMessageHtml(input.message),
+    ]),
+    text: renderTextEmail(heading, [
+      `Hi ${input.name},`,
+      `This is a reply to your query "${input.subject}".`,
+      "Message from the organizers:",
+      input.message,
+    ]),
+  };
+};
+
 const EMAIL_TEMPLATES = {
   registration_received: {
     render: registrationReceivedTemplate,
@@ -276,6 +334,14 @@ const EMAIL_TEMPLATES = {
   },
   registration_status: {
     render: registrationStatusTemplate,
+    redactsPayloadAfterSend: true,
+  },
+  contact_query_received: {
+    render: contactQueryReceivedTemplate,
+    redactsPayloadAfterSend: true,
+  },
+  contact_query_reply: {
+    render: contactQueryReplyTemplate,
     redactsPayloadAfterSend: true,
   },
 } satisfies Record<string, EmailTemplateDefinition>;

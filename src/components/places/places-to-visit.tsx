@@ -74,7 +74,7 @@ const PLACES: readonly Place[] = [
 ];
 
 export const PlacesToVisit = () => (
-  <section className="bg-white">
+  <section id="places" className="bg-white">
     <div className="mx-auto w-full max-w-[1240px] px-5 py-16 sm:px-6 sm:py-24">
       <div className="mx-auto max-w-2xl text-center">
         <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-royal">

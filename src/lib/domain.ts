@@ -22,6 +22,14 @@ export type AbstractDecision = (typeof ABSTRACT_DECISIONS)[number];
 export const EMAIL_OUTBOX_STATUSES = ["pending", "sent", "failed"] as const;
 export type EmailOutboxStatus = (typeof EMAIL_OUTBOX_STATUSES)[number];
 
+export const CONTACT_QUERY_STATUSES = [
+  "queried",
+  "pending",
+  "resolved",
+  "non-important",
+] as const;
+export type ContactQueryStatus = (typeof CONTACT_QUERY_STATUSES)[number];
+
 export const AUDIT_ACTOR_TYPES = ["env_admin"] as const;
 export type AuditActorType = (typeof AUDIT_ACTOR_TYPES)[number];
 
