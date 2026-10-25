@@ -126,7 +126,7 @@ const renderTextEmail = (heading: string, lines: readonly string[]): string =>
   ].join("\n");
 
 const renderAccessLinkHtml = (accessUrl: string): string =>
-  `View your registration: <a href="${escapeHtml(accessUrl)}">${escapeHtml(accessUrl)}</a><br />Keep this private link to yourself.`;
+  `<a href="${escapeHtml(accessUrl)}" style="display:inline-block;margin:6px 0 10px;padding:13px 28px;background-color:#245a91;color:#ffffff;text-decoration:none;border-radius:8px;font-size:15px;font-weight:600;">View your registration</a><span style="display:block;font-size:12px;color:#7b8794;">Keep this private link to yourself.</span>`;
 
 const renderMessageHtml = (message: string): string =>
   `<strong>Message from the organizers:</strong><br />${escapeMultilineHtml(message)}`;
