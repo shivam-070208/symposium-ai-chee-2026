@@ -2,40 +2,87 @@
 "use client";
 
 import { motion } from "motion/react";
+import Image from "next/image";
 import { ArrowUpRight, Mic2 } from "lucide-react";
 
 const speakers = [
   {
     id: "01",
-    name: "Speaker Name 01",
-    designation: "Designation / Affiliation",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=85",
-    expertise: "Computational Hydraulics",
+    name: "Prof. Kishanjit Kumar Khatua",
+    title: "Professor",
+    affiliation: "National Institute of Technology Rourkela",
+    image: "/speakers/prof-kkkhatua.png",
   },
   {
     id: "02",
-    name: "Speaker Name 03",
-    designation: "Designation / Affiliation",
-    image:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=85",
-    expertise: "Hydrology & Water Resources",
+    name: "Dr. Pankaj Mani",
+    title: "Scientist 'G' & Head",
+    affiliation:
+      "National Institute of Hydrology, Centre for Flood Management Studies (CFMS)",
+    image: "/speakers/dr-pankajmani.png",
   },
   {
     id: "03",
-    name: "Speaker Name 03",
-    designation: "Designation / Affiliation",
-    image:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=85",
-    expertise: "Hydrology & Water Resources",
+    name: "Dr. Mohit Prakash Mohanty",
+    title: "Associate Professor",
+    affiliation:
+      "Department of Water Resources Management, Indian Institute of Technology Roorkee",
+    image: "/speakers/dr-mohitprakashmohanty.png",
   },
   {
     id: "04",
-    name: "Speaker Name 03",
-    designation: "Designation / Affiliation",
-    image:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=85",
-    expertise: "Hydrology & Water Resources",
+    name: "Dr. Ashutosh Sharma",
+    title: "Associate Professor",
+    affiliation: "Department of Hydrology, Indian Institute of Technology Roorkee",
+    image: "/speakers/dr-ashutoshsharma.png",
+  },
+  {
+    id: "05",
+    name: "Dr. Kesheo Prasad",
+    title: "Assistant Professor",
+    affiliation:
+      "Department of Civil Engineering, Indian Institute of Technology (BHU) Varanasi, UP",
+    image: "/speakers/dr-kesheoprasad.png",
+  },
+  {
+    id: "06",
+    name: "Dr. Kamalini Devi",
+    title: "Assistant Professor",
+    affiliation:
+      "Department of Civil Engineering, National Institute of Technology Warangal",
+    image: "/speakers/dr-kamalinidevi.png",
+  },
+  {
+    id: "07",
+    name: "Dr. Manish Pandey",
+    title: "Assistant Professor",
+    affiliation:
+      "Department of Civil Engineering, Indian Institute of Technology Kharagpur",
+    image: "/speakers/dr-manishpandey.png",
+  },
+  {
+    id: "08",
+    name: "Dr. Abhishek Kumar Pandey",
+    title: "Assistant Professor",
+    affiliation:
+      "Department of Civil Engineering, Indian Institute of Technology (ISM) Dhanbad",
+    image: "/speakers/dr-abhishekkumarpandey.png",
+  },
+  {
+    id: "09",
+    name: "Dr. Gaurav Misuriya",
+    title: "Assistant Professor",
+    affiliation:
+      "Department of Civil Engineering, Indian Institute of Technology Kharagpur",
+    image: "/speakers/dr-gauravmisuriya.png",
+  },
+  {
+    id: "10",
+    name: "Dr. Jnana Ranjan Khuntia",
+    title: "Assistant Professor",
+    affiliation:
+      "Department of Civil Engineering, Chaitanya Bharathi Institute of Technology (CBIT)",
+    image: "/speakers/dr-jnanaranjankhuntia.png",
   },
 ];
 
@@ -81,7 +128,7 @@ export const SpeakersSection = () => {
         </motion.div>
 
         {/* Flat speaker cards */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+        <div className="flex flex-wrap justify-center gap-6 lg:gap-5">
           {speakers.map((speaker, index) => (
             <motion.article
               key={speaker.id}
@@ -94,15 +141,16 @@ export const SpeakersSection = () => {
                 ease: "easeOut",
               }}
               whileHover={{ y: -4 }}
-              className="group min-w-0 border border-line bg-white transition-colors duration-300 hover:border-royal"
+              className="group w-full min-w-0 border border-line bg-white transition-colors duration-300 hover:border-royal sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-0.9375rem)]"
             >
               {/* Portrait */}
               <div className="relative aspect-[4/4.5] overflow-hidden bg-transparent">
-                <img
+                <Image
                   src={speaker.image}
-                  alt={`Temporary portrait for ${speaker.name}`}
-                  loading="lazy"
-                  className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.035]"
+                  alt={speaker.name}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.035]"
                 />
 
                 {/* Portrait overlay */}
@@ -115,7 +163,7 @@ export const SpeakersSection = () => {
                   className="absolute inset-0"
                 />
 
-                {/* Research area */}
+                {/* Designation */}
                 <div className="absolute bottom-4 left-4 right-4">
                   <span
                     style={{
@@ -125,7 +173,7 @@ export const SpeakersSection = () => {
                     }}
                     className="inline-flex max-w-full border px-3 py-2 text-xs font-medium leading-4 backdrop-blur-sm"
                   >
-                    {speaker.expertise}
+                    {speaker.title}
                   </span>
                 </div>
               </div>
@@ -139,7 +187,7 @@ export const SpeakersSection = () => {
                     </h3>
 
                     <p className="mt-2 text-sm leading-6 text-mist">
-                      {speaker.designation}
+                      {speaker.affiliation}
                     </p>
                   </div>
 
