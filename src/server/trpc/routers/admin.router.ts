@@ -1,4 +1,9 @@
 import { TRPCError } from "@trpc/server";
+import {
+  findAdminAbstractById,
+  listAdminAbstracts,
+  recordAbstractDecision,
+} from "@/server/admin/admin-abstracts";
 import { verifyAdminCredentials } from "@/server/admin/admin-auth";
 import {
   getAdminOverview,
@@ -21,6 +26,9 @@ import {
 import { AdminActionError } from "@/server/admin/admin-errors";
 import { clearAdminSession, startAdminSession } from "@/server/admin/admin-session";
 import {
+  adminAbstractDecisionInputSchema,
+  adminAbstractDetailInputSchema,
+  adminAbstractListInputSchema,
   adminEmailListInputSchema,
   adminEmailRetryInputSchema,
   adminLoginInputSchema,
@@ -119,6 +127,34 @@ export const adminRouter = createTRPCRouter({
             message: input.message,
             actorEmail: ctx.adminEmail,
           });
+        } catch (error) {
+          throw mapAdminActionError(error);
+        }
+      }),
+  }),
+
+  abstracts: createTRPCRouter({
+    list: adminProcedure
+      .input(adminAbstractListInputSchema)
+      .query(({ input }) => listAdminAbstracts(input)),
+
+    byId: adminProcedure
+      .input(adminAbstractDetailInputSchema)
+      .query(async ({ input }) => {
+        const detail = await findAdminAbstractById(input.abstractId);
+
+        if (!detail) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Abstract not found" });
+        }
+
+        return detail;
+      }),
+
+    decide: adminProcedure
+      .input(adminAbstractDecisionInputSchema)
+      .mutation(async ({ input, ctx }) => {
+        try {
+          return await recordAbstractDecision(input, ctx.adminEmail);
         } catch (error) {
           throw mapAdminActionError(error);
         }

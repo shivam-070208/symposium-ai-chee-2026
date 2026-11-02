@@ -33,6 +33,7 @@ export const adminStatusClasses = (status: string): string => {
     sent: "border-success/20 bg-success/10 text-success",
     pending_payment: "border-royal/20 bg-ice text-royal",
     submitted: "border-royal/20 bg-ice text-royal",
+    under_review: "border-royal/20 bg-ice text-royal",
     revision_requested: "border-royal/20 bg-ice text-royal",
     pending: "border-royal/20 bg-ice text-royal",
     cancelled: "border-errorred/20 bg-errorred/10 text-errorred",

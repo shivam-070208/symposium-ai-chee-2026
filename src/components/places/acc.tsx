@@ -3,19 +3,14 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   motion,
   useMotionTemplate,
   useScroll,
   useTransform,
 } from "motion/react";
-
-export type Place = {
-  readonly title: string;
-  readonly location: string;
-  readonly description: string;
-  readonly image: string;
-};
+import type { Place } from "./places-data";
 
 type AccProps = {
   readonly place: Place;
@@ -51,10 +46,11 @@ export const Acc = ({ place, index }: AccProps) => {
   );
 
   return (
-    <div
-      ref={ref}
-      className="group relative aspect-[4/3] overflow-hidden rounded-lg"
-    >
+    <Link href={`/places/${place.slug}`} className="block">
+      <div
+        ref={ref}
+        className="group relative aspect-[4/3] overflow-hidden rounded-lg"
+      >
       {/* Scroll-driven reveal */}
       <motion.div
         style={{ clipPath }}
@@ -93,8 +89,13 @@ export const Acc = ({ place, index }: AccProps) => {
           <p className="mt-0.5 text-[10px] leading-snug text-white/75 sm:mt-1 sm:text-[13px]">
             {place.description}
           </p>
+
+          <p className="mt-1 text-[10px] font-medium text-white/70 sm:mt-1.5 sm:text-[12px]">
+            View details →
+          </p>
         </div>
       </motion.div>
-    </div>
+      </div>
+    </Link>
   );
 };

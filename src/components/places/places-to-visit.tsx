@@ -1,21 +1,5 @@
-import { Acc, type Place } from "./acc";
-
-const PLACES: readonly Place[] = [
-  {
-    title: "Gurudwara Sahib",
-    location: "Patna, Bihar",
-    description: "Sikh gurdwara in Patna",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Patna_Sahib_Gurudwara.jpg/1280px-Patna_Sahib_Gurudwara.jpg",
-  },
-  {
-    title: "Bihar Museum",
-    location: "Patna, Bihar",
-    description: "Art and history museum in Patna",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Bihar_Museum_Bailey_Road_01.jpg/1280px-Bihar_Museum_Bailey_Road_01.jpg",
-  },
-];
+import { Acc } from "./acc";
+import { PLACES } from "./places-data";
 
 export const PlacesToVisit = () => (
   <section id="places" className="bg-white">
@@ -35,7 +19,7 @@ export const PlacesToVisit = () => (
 
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-1 sm:mt-14 sm:gap-3">
         {PLACES.map((place, index) => (
-          <Acc key={place.title} place={place} index={index} />
+          <Acc key={place.slug} place={place} index={index} />
         ))}
       </div>
     </div>

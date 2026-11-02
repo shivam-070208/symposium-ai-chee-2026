@@ -66,6 +66,10 @@ export const adminAbstractListInputSchema = paginationSchema.extend({
 
 export type AdminAbstractListInput = z.infer<typeof adminAbstractListInputSchema>;
 
+export const adminAbstractDetailInputSchema = z.object({
+  abstractId: positiveIdSchema,
+});
+
 export const adminAbstractDecisionInputSchema = z
   .object({
     abstractId: positiveIdSchema,

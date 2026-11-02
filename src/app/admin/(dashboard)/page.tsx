@@ -57,6 +57,21 @@ const AdminOverviewPage = () => {
             overview.data?.failedEmails ? "Retry from the outbox" : undefined
           }
         />
+        <Link
+          href="/admin/abstracts"
+          className="block transition-opacity hover:opacity-90"
+        >
+          <AdminMetricCard
+            label="Abstracts to review"
+            value={overview.data?.abstractsToReview ?? "—"}
+            tone={overview.data?.abstractsToReview ? "warning" : "default"}
+            note={
+              overview.data?.abstractsToReview
+                ? "Open the abstracts page"
+                : undefined
+            }
+          />
+        </Link>
       </div>
 
       <section className="rounded-xl border border-line bg-white">
