@@ -99,7 +99,6 @@ jobs:
 
             REDIS_URL=${{ secrets.REDIS_URL }}
 
-            EMAIL_SMTP_URL=${{ secrets.EMAIL_SMTP_URL }}
             EMAIL_SMTP_USER=${{ secrets.EMAIL_SMTP_USER }}
             EMAIL_SMTP_APP_PASSWORD=${{ secrets.EMAIL_SMTP_APP_PASSWORD }}
             EMAIL_FROM_ADDRESS=${{ secrets.EMAIL_FROM_ADDRESS }}
