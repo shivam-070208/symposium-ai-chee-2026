@@ -7,18 +7,17 @@
 export const PAYMENT_CONFIG = {
   enabled: true,
   currency: "INR",
-  bankName: "State Bank of India",
-  accountName: "AI-CHHE 2026 — NIT Patna",
-  accountNumber: "0000000000000000",
+  bankName: "Indian Bank",
+  accountName: "NIT Patna CFD Account",
+  accountNumber: "50433562364",
   address: "NIT Patna — 800005, Bihar",
-  branchCode: "0000",
-  ifsc: "SBIN0000000",
+  branchCode: "810",
+  ifsc: "IDIB000B810",
   micr: "000000000",
-  swift: "SBININBB000",
-  contactPhone: "(0000) 000000",
-  contactEmail: "registration@example.com",
+  swift: "IDIBINBB000",
+  contactPhone: "+91-7978848747",
+  contactEmail: "bsd.ce@nitp.ac.in",
   referenceNote: "Use your registration reference as the payment reference.",
-  // Optional instruction sheet the delegate can download (PDF in /public).
   instructionPdfPath: "",
 } as const;
 

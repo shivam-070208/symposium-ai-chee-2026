@@ -95,20 +95,25 @@ export const VenueContactSection = () => {
 
               <div className="mt-7 border-t border-line pt-6">
                 <p className="text-sm leading-6 text-bodytext">
-                  The specific venue, building, and room details will be
-                  published once confirmed by the organising committee.
+                  National Institute of Technology Patna, Patna, Bihar —
+                  800005, India.
                 </p>
 
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=National+Institute+of+Technology+Patna"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center gap-3 border border-line px-5 py-3 text-sm font-medium text-navy transition-colors duration-300 hover:border-royal hover:text-royal"
-                >
-                  <Navigation size={16} />
-                  View campus map
-                  <ArrowUpRight size={16} />
-                </a>
+                <div className="mt-4 flex flex-col gap-2 text-sm">
+                  <a
+                    href="mailto:bsd.ce@nitp.ac.in"
+                    className="inline-flex items-center gap-2 text-royal hover:text-navy"
+                  >
+                    <Mail size={16} />
+                    bsd.ce@nitp.ac.in
+                  </a>
+                  <a
+                    href="tel:+917978848747"
+                    className="inline-flex items-center gap-2 text-royal hover:text-navy"
+                  >
+                    +91-7978848747
+                  </a>
+                </div>
               </div>
             </div>
           </motion.article>
@@ -147,10 +152,21 @@ export const VenueContactSection = () => {
                 ENQUIRIES
               </p>
 
-              <p className="mt-3 text-sm leading-6 text-bodytext">
-                Contact details will be announced by the organising
-                committee.
-              </p>
+              <div className="mt-3 flex flex-col gap-2 text-sm leading-6 text-bodytext">
+                <a
+                  href="mailto:bsd.ce@nitp.ac.in"
+                  className="inline-flex items-center gap-2 text-royal hover:text-navy"
+                >
+                  <Mail size={16} />
+                  bsd.ce@nitp.ac.in
+                </a>
+                <a
+                  href="tel:+917978848747"
+                  className="inline-flex items-center gap-2 text-royal hover:text-navy"
+                >
+                  +91-7978848747
+                </a>
+              </div>
             </div>
 
             <div className="mt-auto pt-8">

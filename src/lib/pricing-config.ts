@@ -23,14 +23,14 @@ export const REGISTRATION_PRICING = {
     {
       value: "mtech-student",
       label: "MTech Student",
-      earlyBirdFee: 2000,
-      regularFee: 2500,
+      earlyBirdFee: 1500,
+      regularFee: 2000,
     },
     {
       value: "ug-student",
       label: "UG Student",
-      earlyBirdFee: 1500,
-      regularFee: 2000,
+      earlyBirdFee: 1000,
+      regularFee: 1500,
     },
   ],
 } as const;

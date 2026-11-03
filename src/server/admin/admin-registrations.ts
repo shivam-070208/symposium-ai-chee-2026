@@ -70,6 +70,7 @@ type AdminPaymentSummary = {
   readonly verifiedAt: Date | null;
   readonly rejectionReason: string | null;
   readonly hasProof: boolean;
+  readonly proofS3Key: string | null;
   readonly createdAt: Date;
 };
 
@@ -255,6 +256,7 @@ const toPaymentSummary = (row: {
   verifiedAt: row.verified_at,
   rejectionReason: row.rejection_reason,
   hasProof: Boolean(row.proof_s3_key),
+  proofS3Key: row.proof_s3_key,
   createdAt: row.created_at,
 });
 

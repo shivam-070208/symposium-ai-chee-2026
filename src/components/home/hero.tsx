@@ -34,7 +34,7 @@ export const HeroSection = () => {
             <span className="h-px w-9 bg-[#2563EB]" />
 
             <span className="text-xs font-semibold uppercase tracking-[0.24em] text-[#1D55B5] sm:text-sm">
-              National Symposium · NIT Patna
+              National Symposium · NIT Patna · Physical Mode · Limited Seats
             </span>
           </div>
 
@@ -46,7 +46,8 @@ export const HeroSection = () => {
 
           {/* Symposium theme */}
           <h2 className="mt-6 max-w-[650px] text-2xl font-semibold leading-snug tracking-[-0.025em] text-[#18345E] sm:text-3xl lg:text-[36px]">
-            From Conventional Hydraulics to Intelligent Water Systems
+            Artificial Intelligence and Computational Fluid Dynamics for
+            Next-Generation Hydrology and Hydraulic Engineering
           </h2>
 
           {/* Description */}

@@ -3,6 +3,12 @@ import { queryRow, withTransaction } from "../db/client.ts";
 import type { RegistrationCreateInput } from "../validation/registration.schema.ts";
 import { createRegistrationReference } from "./registration-reference.ts";
 import { issueAccessToken } from "./issue-access-token.ts";
+import {
+  calculateFees,
+  findPricingCategory,
+  isEarlyBird,
+  REGISTRATION_PRICING,
+} from "../../lib/pricing-config.ts";
 
 export type RegistrationCreationResult = {
   readonly registrationId: number;
@@ -55,22 +61,44 @@ const createRegistrationInTransaction = async (
       ],
     );
 
-    const registrationReference = createRegistrationReference();
+const registrationReference = createRegistrationReference();
 
-    const [registrationResult] = await transaction.execute<ResultSetHeader>(
-      `INSERT INTO registrations
-        (public_reference, participant_id, status, wants_abstract_submission,
-         base_amount, tax_amount, total_amount, currency, pricing_rule_snapshot,
-         idempotency_key, submitted_at)
-       VALUES (?, ?, 'pending_payment', ?, NULL, NULL, NULL, NULL, ?, ?, UTC_TIMESTAMP(6))`,
+  const [registrationResult] = await transaction.execute<ResultSetHeader>(
+    `INSERT INTO registrations
+      (public_reference, participant_id, status, wants_abstract_submission,
+       base_amount, tax_amount, total_amount, currency, pricing_rule_snapshot,
+       idempotency_key, submitted_at)
+     VALUES (?, ?, 'pending_payment', ?, NULL, NULL, NULL, NULL, ?, ?, UTC_TIMESTAMP(6))`,
+    [
+      registrationReference,
+      participantResult.insertId,
+      input.wantsAbstractSubmission ? 1 : 0,
+      PENDING_PRICING_SNAPSHOT,
+      input.idempotencyKey,
+    ],
+  );
+
+  if (input.proofS3Key && input.proofContentType && input.proofSizeBytes) {
+    const pricingCategory = findPricingCategory(input.category);
+    const fees = pricingCategory
+      ? calculateFees(pricingCategory, isEarlyBird())
+      : null;
+
+    await transaction.execute(
+      `INSERT INTO payments
+        (registration_id, expected_amount, currency, transaction_reference,
+         proof_s3_key, proof_content_type, proof_size_bytes, status)
+       VALUES (?, ?, ?, NULL, ?, ?, ?, 'submitted')`,
       [
-        registrationReference,
-        participantResult.insertId,
-        input.wantsAbstractSubmission ? 1 : 0,
-        PENDING_PRICING_SNAPSHOT,
-        input.idempotencyKey,
+        registrationResult.insertId,
+        fees ? fees.total : null,
+        fees ? REGISTRATION_PRICING.currency : null,
+        input.proofS3Key,
+        input.proofContentType,
+        input.proofSizeBytes,
       ],
     );
+  }
 
     const accessPath = await issueAccessToken(
       transaction,

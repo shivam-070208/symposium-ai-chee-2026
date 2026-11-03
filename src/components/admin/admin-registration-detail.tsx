@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, FileText } from "lucide-react";
 import { formatInr } from "@/lib/pricing-config";
 import { trpc } from "@/lib/trpc";
 import { AdminEmpty } from "./admin-empty";
@@ -130,14 +130,29 @@ export const AdminRegistrationDetail = ({
             {payments.map((payment) => (
               <li
                 key={payment.id}
-                className="flex flex-col gap-1 px-5 py-3.5 text-[13px] sm:flex-row sm:items-center sm:justify-between"
+                className="flex flex-col gap-2 px-5 py-3.5 text-[13px] sm:flex-row sm:items-center sm:justify-between"
               >
-                <span className="text-bodytext">
-                  #{payment.id} · {money(payment.expectedAmount)}
-                  {payment.transactionReference
-                    ? ` · ${payment.transactionReference}`
-                    : ""}
-                </span>
+                <div className="flex min-w-0 flex-col gap-1">
+                  <span className="text-bodytext">
+                    #{payment.id} · {money(payment.expectedAmount)}
+                    {payment.transactionReference
+                      ? ` · ${payment.transactionReference}`
+                      : ""}
+                  </span>
+                  {payment.hasProof && payment.proofS3Key ? (
+                    <a
+                      href={payment.proofS3Key}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-royal hover:text-navy"
+                    >
+                      <FileText className="size-3.5" />
+                      View payment receipt
+                    </a>
+                  ) : (
+                    <span className="text-mist">No receipt uploaded</span>
+                  )}
+                </div>
                 <AdminStatusBadge status={payment.status} />
               </li>
             ))}

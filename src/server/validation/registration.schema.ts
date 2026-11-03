@@ -71,6 +71,10 @@ export const registrationCreateInputSchema = z.object({
   privacyAcknowledged: privacyAcknowledgementSchema,
   // Client-generated so retries cannot create duplicate registrations.
   idempotencyKey: z.uuid(),
+  // Optional payment proof uploaded before submission.
+  proofS3Key: trimmedText(1, 512).optional(),
+  proofContentType: trimmedText(1, 100).optional(),
+  proofSizeBytes: z.number().int().positive().optional(),
 });
 
 export type RegistrationCreateInput = z.infer<

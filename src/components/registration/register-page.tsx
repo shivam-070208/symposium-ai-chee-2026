@@ -113,6 +113,57 @@ export const RegisterPage = () => {
       return;
     }
 
+    let proofMetadata: {
+      s3ObjectKey: string;
+      originalFilename: string;
+      contentType: string;
+      sizeBytes: number;
+    } | undefined;
+
+    // Upload the receipt before creating the registration.
+    try {
+      const uploadForm = new FormData();
+      uploadForm.append("file", proof);
+
+      const response = await fetch("/api/payment-proof-upload", {
+        method: "POST",
+        body: uploadForm,
+      });
+
+      const body = (await response.json().catch(() => null)) as {
+        error?: string;
+        s3ObjectKey?: string;
+        originalFilename?: string;
+        contentType?: string;
+        sizeBytes?: number;
+      } | null;
+
+      if (
+        !response.ok ||
+        !body?.s3ObjectKey ||
+        !body.originalFilename ||
+        !body.contentType ||
+        !body.sizeBytes
+      ) {
+        setProofError(
+          body?.error ?? "The receipt could not be uploaded. Try again.",
+        );
+        return;
+      }
+
+      proofMetadata = {
+        s3ObjectKey: body.s3ObjectKey,
+        originalFilename: body.originalFilename,
+        contentType: body.contentType,
+        sizeBytes: body.sizeBytes,
+      };
+    } catch {
+      setProofError(
+        "The receipt could not be uploaded. Check your connection and try again.",
+      );
+      return;
+    }
+
     await form.handleSubmit(async (values) => {
       idempotencyKeyRef.current ??= crypto.randomUUID();
 
@@ -120,6 +171,9 @@ export const RegisterPage = () => {
         const result = await createRegistration.mutateAsync({
           ...values,
           idempotencyKey: idempotencyKeyRef.current,
+          proofS3Key: proofMetadata.s3ObjectKey,
+          proofContentType: proofMetadata.contentType,
+          proofSizeBytes: proofMetadata.sizeBytes,
         });
 
         setReceipt({ reference: result.reference, email: values.email });

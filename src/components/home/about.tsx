@@ -62,11 +62,13 @@ export const AboutSection = () => {
               </p>
 
               <p>
-                AI-CHHE 2026 is centred on the intersection of conventional
-                hydraulics and intelligent water systems. Its theme,
-                “From Conventional Hydraulics to Intelligent Water Systems,”
-                highlights the evolving relationship between established
-                engineering knowledge and emerging computational approaches.
+                AI-CHHE 2026 is centred on artificial intelligence and
+                computational fluid dynamics for next-generation hydrology
+                and hydraulic engineering. Its theme, “Artificial Intelligence
+                and Computational Fluid Dynamics for Next-Generation
+                Hydrology and Hydraulic Engineering,” highlights the
+                evolving relationship between established engineering
+                knowledge and emerging computational approaches.
               </p>
             </div>
 

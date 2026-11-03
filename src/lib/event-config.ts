@@ -2,12 +2,11 @@ export const EVENT_CONFIG = {
   name: "AI-CHHE 2026",
   institution: "National Institute of Technology Patna",
   department: "Department of Civil Engineering",
-  theme: "From Conventional Hydraulics to Intelligent Water Systems",
+  theme: "Artificial Intelligence and Computational Fluid Dynamics for Next-Generation Hydrology and Hydraulic Engineering",
   dates: {
     start: "2026-11-21",
     end: "2026-11-22",
-    // Spec §2: "subject to final organizer confirmation".
-    isConfirmed: false,
+    isConfirmed: true,
   },
   focusAreas: [
     "Artificial intelligence",
