@@ -134,6 +134,7 @@ const SubmissionForm = ({ onSubmitted }: SubmissionFormProps) => {
   const [documentFile, setDocumentFile] = useState<File | null>(null);
   const [documentError, setDocumentError] = useState<string | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<AbstractFormValues>({
     resolver: zodResolver(abstractFormSchema),
@@ -179,6 +180,10 @@ const SubmissionForm = ({ onSubmitted }: SubmissionFormProps) => {
   };
 
   const onSubmitForm = async (values: AbstractFormValues) => {
+    if (isSubmitting) {
+      return;
+    }
+
     setDocumentError(null);
     setUploadError(null);
 
@@ -186,6 +191,8 @@ const SubmissionForm = ({ onSubmitted }: SubmissionFormProps) => {
       setDocumentError("Add your abstract as text or attach a document.");
       return;
     }
+
+    setIsSubmitting(true);
 
     let file: UploadedFileMetadata | undefined;
 
@@ -222,6 +229,7 @@ const SubmissionForm = ({ onSubmitted }: SubmissionFormProps) => {
           setUploadError(
             body?.error ?? "The document could not be uploaded. Try again.",
           );
+          setIsSubmitting(false);
           return;
         }
 
@@ -235,6 +243,7 @@ const SubmissionForm = ({ onSubmitted }: SubmissionFormProps) => {
         setUploadError(
           "The document could not be uploaded. Check your connection and try again.",
         );
+        setIsSubmitting(false);
         return;
       }
     }
@@ -256,6 +265,7 @@ const SubmissionForm = ({ onSubmitted }: SubmissionFormProps) => {
       .catch(() => null);
 
     if (!result) {
+      setIsSubmitting(false);
       return;
     }
 
@@ -609,13 +619,17 @@ const SubmissionForm = ({ onSubmitted }: SubmissionFormProps) => {
 
         <button
           type="submit"
-          disabled={submitAbstract.isPending}
+          disabled={submitAbstract.isPending || isSubmitting}
           className="mt-7 inline-flex h-[46px] w-full items-center justify-center gap-2 rounded-lg bg-royal px-5 text-[14px] font-semibold text-white transition-colors hover:bg-navy disabled:opacity-60 sm:w-auto"
         >
-          {submitAbstract.isPending ? (
+          {submitAbstract.isPending || isSubmitting ? (
             <LoaderCircle className="size-4 animate-spin" />
           ) : null}
-          Submit abstract
+          {isSubmitting
+            ? "Uploading document…"
+            : submitAbstract.isPending
+              ? "Submitting…"
+              : "Submit abstract"}
         </button>
       </form>
     </section>

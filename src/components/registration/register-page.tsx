@@ -56,6 +56,7 @@ export const RegisterPage = () => {
   );
   const [proof, setProof] = useState<File | null>(null);
   const [proofError, setProofError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [receipt, setReceipt] = useState<{
     reference: string;
     email: string;
@@ -108,10 +109,17 @@ export const RegisterPage = () => {
   const submitRegistration = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (isSubmitting) {
+      return;
+    }
+
     if (!proof) {
       setProofError("Upload the transaction receipt PDF before submitting.");
       return;
     }
+
+    setIsSubmitting(true);
+    setProofError(null);
 
     let proofMetadata: {
       s3ObjectKey: string;
@@ -148,6 +156,7 @@ export const RegisterPage = () => {
         setProofError(
           body?.error ?? "The receipt could not be uploaded. Try again.",
         );
+        setIsSubmitting(false);
         return;
       }
 
@@ -161,6 +170,7 @@ export const RegisterPage = () => {
       setProofError(
         "The receipt could not be uploaded. Check your connection and try again.",
       );
+      setIsSubmitting(false);
       return;
     }
 
@@ -180,6 +190,8 @@ export const RegisterPage = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       } catch {
         // The mutation error state is rendered next to the submit button.
+      } finally {
+        setIsSubmitting(false);
       }
     })(event);
   };
@@ -648,13 +660,13 @@ export const RegisterPage = () => {
 
               <button
                 type="submit"
-                disabled={createRegistration.isPending}
+                disabled={createRegistration.isPending || isSubmitting}
                 className="mt-6 inline-flex h-[46px] w-full items-center justify-center gap-2 rounded-lg bg-royal px-5 text-[14px] font-semibold text-white transition-colors hover:bg-navy disabled:opacity-60 sm:w-auto"
               >
-                {createRegistration.isPending ? (
+                {createRegistration.isPending || isSubmitting ? (
                   <LoaderCircle className="size-4 animate-spin" />
                 ) : null}
-                Submit Registration
+                {isSubmitting ? "Uploading receipt…" : createRegistration.isPending ? "Submitting…" : "Submit Registration"}
                 <ArrowRight className="size-4" />
               </button>
             </div>

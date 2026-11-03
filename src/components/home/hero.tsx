@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
+import { ArrowRight, CalendarDays, FileText, MapPin } from "lucide-react";
 
 export const HeroSection = () => {
   return (
@@ -86,6 +86,16 @@ export const HeroSection = () => {
             >
               Explore Symposium
             </Link>
+
+            <a
+              href="https://res.cloudinary.com/dgjj8wywd/raw/upload/v1793694486/ai-chhe-2026/abstracts/jlla738ovekngjc5auab.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-[#C9D7E9] bg-white/75 px-7 text-sm font-semibold text-[#18345E] backdrop-blur-sm transition-colors hover:border-[#1457C5] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+            >
+              <FileText className="size-4" />
+              View Brochure
+            </a>
           </div>
 
           {/* Supporting text */}

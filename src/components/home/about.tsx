@@ -73,7 +73,7 @@ export const AboutSection = () => {
             </div>
 
             <Link
-              href="/themes"
+              href="#themes"
               className="group mt-9 inline-flex items-center gap-2 border-b border-[#245A91]/40 pb-2 text-sm font-semibold text-[#173F70] transition-colors hover:border-[#173F70] hover:text-[#245A91] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#35699E] focus-visible:ring-offset-4"
             >
               Explore Research Themes
